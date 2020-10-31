@@ -17,6 +17,8 @@
 #
 class Block
 
+  require "byebug"
+
   def initialize (from, to)
     if to < from
       @start, @end = to, from
@@ -134,7 +136,18 @@ class Block
   # Return the result of adding the other Block (or Blocks) to self.
 
   def add (other)
-    # Implement.
+    # self 100, 200
+    # other 90, 110
+    debugger
+    if surrounds?(other) || covers?(other)
+      return self
+    elsif !surrounds?(other) || !covers?(other)
+      return other
+    elsif intersects_top?(other)
+      return Block.new(self.bottom, other.top)
+    elsif intersects_bottom?(other)
+      return Block.new(other.bottom, self.top)
+    end
   end
   
   # Return the result of subtracting the other Block (or Blocks) from self.
