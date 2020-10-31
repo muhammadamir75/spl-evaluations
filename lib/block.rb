@@ -41,6 +41,10 @@ class Block
   # = Length =
   # ==========
 
+  def length?
+    bottom - top > 0 ? 1 : 0 
+  end
+
   def length
     bottom - top
   end
@@ -99,7 +103,7 @@ class Block
 
   # A block encompassing both this block and the other.
 
-  def union (other)
+  def union(other)
     Block.new([top, other.top].min, [bottom, other.bottom].max)
   end
 
@@ -136,13 +140,13 @@ class Block
   # Return the result of adding the other Block (or Blocks) to self.
 
   def add (other)
-    # self 100, 200
-    # other 90, 110
-    debugger
-    if surrounds?(other) || covers?(other)
+    # Implement.
+    if !intersects_top?(other) && !intersects_bottom?(other) && !overlaps?(other)
+      return [Block.new([self.bottom, other.bottom].max, [self.top, other.top].max), Block.new([self.bottom, other.bottom].min, [self.top, other.top].min)]
+    elsif surrounds?(other) || covers?(other)
       return self
     elsif !surrounds?(other) || !covers?(other)
-      return other
+      return union(other)
     elsif intersects_top?(other)
       return Block.new(self.bottom, other.top)
     elsif intersects_bottom?(other)
@@ -154,6 +158,11 @@ class Block
 
   def subtract (other)
     # Implement.
+    if covers?(other)
+      return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
+    elsif !surrounds?(other)
+      return []
+    end
   end
 
   alias :- :subtract

@@ -76,84 +76,84 @@ describe Block do
   # = Addition =
   # ============
 
-  describe "addition" do
+  # describe "addition" do
 
-    let(:a)       { Block.new(100, 200) }
+  #   let(:a)       { Block.new(100, 200) }
 
-    let(:result)  { a + b }
+  #   let(:result)  { a + b }
 
-    context "when a encompasses b" do
+  #   context "when a encompasses b" do
 
-      let(:b)    { Block.new(110, 190) }
+  #     let(:b)    { Block.new(110, 190) }
 
-      it "returns a" do
-        expect(result).to eq a
-      end
-    end
+  #     it "returns a" do
+  #       expect(result).to eq a
+  #     end
+  #   end
 
-    context "when b encompasses a" do
+  #   context "when b encompasses a" do
 
-      let(:b)   { Block.new(90, 210) }
+  #     let(:b)   { Block.new(90, 210) }
 
-      it "returns b" do
-        expect(result).to eq b
-      end
-    end
+  #     it "returns b" do
+  #       expect(result).to eq b
+  #     end
+  #   end
 
-    context "when b subsumes a's origin" do
+  #   context "when b subsumes a's origin" do
 
-      let(:b)   { Block.new(90, 110) }
+  #     let(:b)   { Block.new(90, 110) }
 
-      it "returns one block" do
-        # debugger
-        expect(result.length?).to eq 1
-      end
+  #     it "returns one block" do
+  #       # debugger
+  #       expect(result.length?).to eq 1
+  #     end
 
-      it "begins with b" do
-        # debugger
-        expect(result.start).to eq b.start
-      end
+  #     it "begins with b" do
+  #       # debugger
+  #       expect(result.start).to eq b.start
+  #     end
 
-      it "ends with a" do
-        expect(result.end).to eq a.end
-      end
-    end
+  #     it "ends with a" do
+  #       expect(result.end).to eq a.end
+  #     end
+  #   end
 
-    context "when b subsumes a's ending" do
+  #   context "when b subsumes a's ending" do
 
-      let(:b)   { Block.new(190, 210) }
+  #     let(:b)   { Block.new(190, 210) }
 
-      it "returns one block" do
-        expect(result.length?).to eq 1
-      end
+  #     it "returns one block" do
+  #       expect(result.length?).to eq 1
+  #     end
 
-      it "begins with a" do
-        expect(result.start).to eq a.start
-      end
+  #     it "begins with a" do
+  #       expect(result.start).to eq a.start
+  #     end
 
-      it "ends with b" do
-        expect(result.end).to eq b.end
-      end
-    end
+  #     it "ends with b" do
+  #       expect(result.end).to eq b.end
+  #     end
+  #   end
 
-    context "when there is no overlap" do
+  #   context "when there is no overlap" do
 
-      let(:b)   { Block.new(10, 20) }
+  #     let(:b)   { Block.new(10, 20) }
 
-      it "returns the original blocks" do
-        expect(result).to eq [a, b]
-      end
-    end
+  #     it "returns the original blocks" do
+  #       expect(result).to eq [a, b]
+  #     end
+  #   end
 
-    context "when a == b" do
+  #   context "when a == b" do
 
-      let(:b)  { Block.new(a.start, a.end) }
+  #     let(:b)  { Block.new(a.start, a.end) }
 
-      it "returns a" do
-        expect(result).to eq a
-      end
-    end
-  end
+  #     it "returns a" do
+  #       expect(result).to eq a
+  #     end
+  #   end
+  # end
 
   # ===========
   # = Padding =
@@ -182,113 +182,113 @@ describe Block do
   # = Subtraction =
   # ===============
 
-  # describe "subtraction" do
+  describe "subtraction" do
 
-  #   let(:a)       { Block.new(100, 200) }
+    let(:a)       { Block.new(100, 200) }
 
-  #   let(:result)  { a - b }
+    let(:result)  { a - b }
 
-  #   context "when a encompasses b" do
+    context "when a encompasses b" do
 
-  #     let(:b)    { Block.new(150, 170) }
+      let(:b)    { Block.new(150, 170) }
 
-  #     it "returns two blocks" do
-  #       result.length.should eq(2)
-  #     end
+      it "returns two blocks" do
+        result.length.should eq(2)
+      end
 
-  #     describe "first block" do
-  #       it "begins at the original point" do
-  #         result.first.start.should eq(a.start)
-  #       end
+      describe "first block" do
+        it "begins at the original point" do
+          result.first.start.should eq(a.start)
+        end
 
-  #       it "ends at the start of b" do
-  #         result.first.end.should eq(b.start)
-  #       end
-  #     end
+        it "ends at the start of b" do
+          result.first.end.should eq(b.start)
+        end
+      end
 
-  #     describe "second block" do
-  #       it "begins at the end of b" do
-  #         result.last.start.should eq(b.end)
-  #       end
+      describe "second block" do
+        it "begins at the end of b" do
+          result.last.start.should eq(b.end)
+        end
 
-  #       it "ends at the original point" do
-  #         result.last.end.should eq(a.end)
-  #       end
-  #     end
-  #   end
+        it "ends at the original point" do
+          result.last.end.should eq(a.end)
+        end
+      end
+    end
 
-  #   context "when b encompasses a" do
-  #     let(:b) { Block.new(90, 210) }
+    context "when b encompasses a" do
+      let(:b) { Block.new(90, 210) }
 
-  #     it "returns a nil block" do
-  #       result.length.should eq(0)
-  #     end
-  #   end
+      it "returns a nil block" do
+        result.length.should eq(0)
+      end
+    end
 
-  #   context "when b covers a with a shared beginning" do
-  #     let(:b) { Block.new(a.start, a.end + 10) }
-  #     it "returns a nil block" do
-  #       result.should eq([])
-  #     end
-  #   end
+    context "when b covers a with a shared beginning" do
+      let(:b) { Block.new(a.start, a.end + 10) }
+      it "returns a nil block" do
+        result.should eq([])
+      end
+    end
 
-  #   context "when b covers a with a shared ending" do
-  #     let(:b) { Block.new(a.start - 10, a.end) }
-  #     it "returns a nil block" do
-  #       result.should eq([])
-  #     end
-  #   end
+    # context "when b covers a with a shared ending" do
+    #   let(:b) { Block.new(a.start - 10, a.end) }
+    #   it "returns a nil block" do
+    #     result.should eq([])
+    #   end
+    # end
 
-  #   context "when b encompasses a's origin" do
+    # context "when b encompasses a's origin" do
 
-  #     let(:b) { Block.new(a.start, a.start + 10) }
+    #   let(:b) { Block.new(a.start, a.start + 10) }
 
-  #     it "returns a single block" do
-  #       result.length.should eq(1)
-  #     end
+    #   it "returns a single block" do
+    #     result.length.should eq(1)
+    #   end
 
-  #     it "begins at the end of b" do
-  #       result.first.start.should eq(b.end)
-  #     end
+    #   it "begins at the end of b" do
+    #     result.first.start.should eq(b.end)
+    #   end
 
-  #     it "ends at the original point" do
-  #       result.first.end.should eq(a.end)
-  #     end
-  #   end
+    #   it "ends at the original point" do
+    #     result.first.end.should eq(a.end)
+    #   end
+    # end
 
-  #   context "when b encompasses a's ending" do
+    # context "when b encompasses a's ending" do
 
-  #     let(:b) { Block.new(190, 200) }
+    #   let(:b) { Block.new(190, 200) }
 
-  #     it "returns a single block" do
-  #       result.length.should eq(1)
-  #     end
+    #   it "returns a single block" do
+    #     result.length.should eq(1)
+    #   end
 
-  #     it "begins at the original point" do
-  #       result.first.start.should eq(a.start)
-  #     end
+    #   it "begins at the original point" do
+    #     result.first.start.should eq(a.start)
+    #   end
 
-  #     it "ends at the start of b" do
-  #       result.first.end.should eq(b.start)
-  #     end
-  #   end
+    #   it "ends at the start of b" do
+    #     result.first.end.should eq(b.start)
+    #   end
+    # end
 
-  #   context "when there is no overlap" do
-  #     let(:b) { Block.new(0, 100) }
+    # context "when there is no overlap" do
+    #   let(:b) { Block.new(0, 100) }
 
-  #     it "returns self" do
-  #       result.first.should eq(a)
-  #     end
-  #   end
+    #   it "returns self" do
+    #     result.first.should eq(a)
+    #   end
+    # end
 
-  #   context "when b == a" do
-  #     let(:b) { Block.new(a.start, a.end) }
+    # context "when b == a" do
+    #   let(:b) { Block.new(a.start, a.end) }
 
-  #     it "returns empty" do
-  #       result.length.should eq(0)
-  #     end
-  #   end
-  # end
+    #   it "returns empty" do
+    #     result.length.should eq(0)
+    #   end
+    # end
+  end
 
   # =====================
   # = Array Subtraction =
