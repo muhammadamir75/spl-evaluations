@@ -82,23 +82,23 @@ describe Block do
 
     let(:result)  { a + b }
 
-    # context "when a encompasses b" do
+    context "when a encompasses b" do
 
-    #   let(:b)    { Block.new(110, 190) }
+      let(:b)    { Block.new(110, 190) }
 
-    #   it "returns a" do
-    #     expect(result).to eq a
-    #   end
-    # end
+      it "returns a" do
+        expect(result).to eq a
+      end
+    end
 
-    # context "when b encompasses a" do
+    context "when b encompasses a" do
 
-    #   let(:b)   { Block.new(90, 210) }
+      let(:b)   { Block.new(90, 210) }
 
-    #   it "returns b" do
-    #     expect(result).to eq b
-    #   end
-    # end
+      it "returns b" do
+        expect(result).to eq b
+      end
+    end
 
     context "when b subsumes a's origin" do
 
@@ -106,53 +106,53 @@ describe Block do
 
       it "returns one block" do
         # debugger
-        expect(result.length).to eq 1
+        expect(result.length?).to eq 1
       end
 
       it "begins with b" do
         # debugger
-        expect(result.first.start).to eq b.start
+        expect(result.start).to eq b.start
       end
 
       it "ends with a" do
-        expect(result.first.end).to eq a.end
+        expect(result.end).to eq a.end
       end
     end
 
-    # context "when b subsumes a's ending" do
+    context "when b subsumes a's ending" do
 
-    #   let(:b)   { Block.new(190, 210) }
+      let(:b)   { Block.new(190, 210) }
 
-    #   it "returns one block" do
-    #     expect(result.length).to eq 1
-    #   end
+      it "returns one block" do
+        expect(result.length?).to eq 1
+      end
 
-    #   it "begins with a" do
-    #     expect(result.first.start).to eq a.start
-    #   end
+      it "begins with a" do
+        expect(result.start).to eq a.start
+      end
 
-    #   it "ends with b" do
-    #     expect(result.first.end).to eq b.end
-    #   end
-    # end
+      it "ends with b" do
+        expect(result.end).to eq b.end
+      end
+    end
 
-    # context "when there is no overlap" do
+    context "when there is no overlap" do
 
-    #   let(:b)   { Block.new(10, 20) }
+      let(:b)   { Block.new(10, 20) }
 
-    #   it "returns the original blocks" do
-    #     expect(result).to eq [a, b]
-    #   end
-    # end
+      it "returns the original blocks" do
+        expect(result).to eq [a, b]
+      end
+    end
 
-    # context "when a == b" do
+    context "when a == b" do
 
-    #   let(:b)  { Block.new(a.start, a.end) }
+      let(:b)  { Block.new(a.start, a.end) }
 
-    #   it "returns a" do
-    #     expect(result).to eq a
-    #   end
-    # end
+      it "returns a" do
+        expect(result).to eq a
+      end
+    end
   end
 
   # ===========
