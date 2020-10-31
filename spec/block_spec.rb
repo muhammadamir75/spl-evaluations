@@ -232,62 +232,62 @@ describe Block do
       end
     end
 
-    # context "when b covers a with a shared ending" do
-    #   let(:b) { Block.new(a.start - 10, a.end) }
-    #   it "returns a nil block" do
-    #     result.should eq([])
-    #   end
-    # end
+    context "when b covers a with a shared ending" do
+      let(:b) { Block.new(a.start - 10, a.end) }
+      it "returns a nil block" do
+        result.should eq([])
+      end
+    end
 
-    # context "when b encompasses a's origin" do
+    context "when b encompasses a's origin" do
 
-    #   let(:b) { Block.new(a.start, a.start + 10) }
+      let(:b) { Block.new(a.start, a.start + 10) }
 
-    #   it "returns a single block" do
-    #     result.length.should eq(1)
-    #   end
+      it "returns a single block" do
+        result.length.should eq(1)
+      end
 
-    #   it "begins at the end of b" do
-    #     result.first.start.should eq(b.end)
-    #   end
+      it "begins at the end of b" do
+        result.first.start.should eq(b.end)
+      end
 
-    #   it "ends at the original point" do
-    #     result.first.end.should eq(a.end)
-    #   end
-    # end
+      it "ends at the original point" do
+        result.first.end.should eq(a.end)
+      end
+    end
 
-    # context "when b encompasses a's ending" do
+    context "when b encompasses a's ending" do
 
-    #   let(:b) { Block.new(190, 200) }
+      let(:b) { Block.new(190, 200) }
 
-    #   it "returns a single block" do
-    #     result.length.should eq(1)
-    #   end
+      it "returns a single block" do
+        result.length.should eq(1)
+      end
 
-    #   it "begins at the original point" do
-    #     result.first.start.should eq(a.start)
-    #   end
+      it "begins at the original point" do
+        result.first.start.should eq(a.start)
+      end
 
-    #   it "ends at the start of b" do
-    #     result.first.end.should eq(b.start)
-    #   end
-    # end
+      it "ends at the start of b" do
+        result.first.end.should eq(b.start)
+      end
+    end
 
-    # context "when there is no overlap" do
-    #   let(:b) { Block.new(0, 100) }
+    context "when there is no overlap" do
+      let(:b) { Block.new(0, 100) }
 
-    #   it "returns self" do
-    #     result.first.should eq(a)
-    #   end
-    # end
+      it "returns self" do
+        result.first.should eq(a)
+      end
+    end
 
-    # context "when b == a" do
-    #   let(:b) { Block.new(a.start, a.end) }
+    context "when b == a" do
+      let(:b) { Block.new(a.start, a.end) }
 
-    #   it "returns empty" do
-    #     result.length.should eq(0)
-    #   end
-    # end
+      it "returns empty" do
+        result.length.should eq(0)
+      end
+    end
   end
 
   # =====================

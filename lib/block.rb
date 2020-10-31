@@ -158,7 +158,20 @@ class Block
 
   def subtract (other)
     # Implement.
-    if covers?(other)
+    # debugger
+    if self == other
+      return []
+    elsif (intersects_top?(other) || intersects_bottom?(other)) && overlaps?(other) && !covers?(other) && !surrounds?(other)
+      return [self]
+    elsif intersects_top?(other) && covers?(other)
+      return [trim_to([top, other.top].max)]
+    elsif intersects_bottom?(other) && covers?(other)
+      return [trim_from([bottom, other.bottom].min)]
+    elsif !intersects_top?(other) && intersects_bottom?(other) && !covers?(other)
+      return []
+    elsif intersects_top?(other) && !intersects_bottom?(other) && !covers?(other)
+      return []
+    elsif covers?(other)
       return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
     elsif !surrounds?(other)
       return []
