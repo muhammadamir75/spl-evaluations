@@ -142,15 +142,15 @@ class Block
   def add (other)
     # Implement.
     if !intersects_top?(other) && !intersects_bottom?(other) && !overlaps?(other)
-      return [Block.new([self.bottom, other.bottom].max, [self.top, other.top].max), Block.new([self.bottom, other.bottom].min, [self.top, other.top].min)]
+      return [Block.new([self.bottom, other.bottom].min, [self.top, other.top].min), Block.new([self.bottom, other.bottom].max, [self.top, other.top].max)]
     elsif surrounds?(other) || covers?(other)
-      return self
+      return [self]
     elsif !surrounds?(other) || !covers?(other)
-      return union(other)
+      return [union(other)]
     elsif intersects_top?(other)
-      return Block.new(self.bottom, other.top)
+      return [Block.new(self.bottom, other.top)]
     elsif intersects_bottom?(other)
-      return Block.new(other.bottom, self.top)
+      return [Block.new(other.bottom, self.top)]
     end
   end
   
@@ -222,5 +222,20 @@ class Block
 
   def merge (others)
     # Implement.
+    # debugger
+    res = []
+    ind = 0
+    result = self
+    while(ind < others.length)
+      if !others[ind + 1].nil?
+        debugger
+        result = result.last + others[ind] if result.class == Array
+        result = result + others[ind] if ind == 0
+        debugger
+      end
+      ind = ind + 1
+    end
+    debugger
   end
+
 end
