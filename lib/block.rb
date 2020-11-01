@@ -222,20 +222,30 @@ class Block
 
   def merge (others)
     # Implement.
-    # debugger
     res = []
     ind = 0
     result = self
     while(ind < others.length)
-      if !others[ind + 1].nil?
-        debugger
+      if result.class == Array
         result = result.last + others[ind] if result.class == Array
-        result = result + others[ind] if ind == 0
-        debugger
+        result.each do |r|
+          if !res.include?(r)
+            if !res.last.overlaps?(r)
+              res.push(r)
+            elsif res.last.intersects_top?(r)
+              res[res.length - 1] = (res.last + r).first
+            end
+          end
+        end
+      elsif ind == 0
+        result = result + others[ind]
+        result.each do |r|
+          res.push(r) if !res.include?(r)
+        end
       end
       ind = ind + 1
     end
-    debugger
+    res
   end
 
 end
