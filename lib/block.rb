@@ -158,24 +158,49 @@ class Block
 
   def subtract (other)
     # Implement.
-    # debugger
-    if self == other
-      return []
-    elsif intersects_top?(other) && covers?(other)
-      return [trim_to([top, other.top].max)]
-    elsif intersects_bottom?(other) && covers?(other)
-      return [trim_from([bottom, other.bottom].min)]
-    elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other)
-      return [self]
-    elsif !intersects_top?(other) && intersects_bottom?(other) && !covers?(other)
-      return []
-    elsif intersects_top?(other) && !intersects_bottom?(other) && !covers?(other)
-      return []
-    elsif covers?(other)
-      return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
-    elsif !surrounds?(other)
-      return []
-
+    if other.length > 1
+      i = 0
+      parent = self
+      res = []
+      while (i < other.length)
+        if parent == other[i]
+          puts parent
+        elsif intersects_top?(other[i]) && covers?(other[i])
+          res.push(trim_to([parent.top, other[i].top].max))
+        elsif intersects_bottom?(other[i]) && covers?(other[i])
+          res.push(trim_from([parent.bottom, other[i].bottom].min))
+        elsif (!intersects_top?(other[i]) && !intersects_bottom?(other[i])) && !covers?(other[i]) && !surrounds?(other[i])
+          puts parent
+        elsif !intersects_top?(other[i]) && intersects_bottom?(other[i]) && !covers?(other[i])
+          puts parent
+        elsif intersects_top?(other[i]) && !intersects_bottom?(other[i]) && !covers?(other[i])
+          puts parent
+        elsif covers?(other[i])
+          parent = res.push(Block.new([parent.top, other[i].top].min, [parent.top, other[i].top].max), Block.new([parent.bottom, other[i].bottom].min, [parent.bottom, other[i].bottom].max ))
+        elsif !surrounds?(other[i])
+          puts parent
+        end        
+        i += 1
+      end
+      res
+    else
+      if self == other
+        return []
+      elsif intersects_top?(other) && covers?(other)
+        return [trim_to([top, other.top].max)]
+      elsif intersects_bottom?(other) && covers?(other)
+        return [trim_from([bottom, other.bottom].min)]
+      elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other)
+        return [self]
+      elsif !intersects_top?(other) && intersects_bottom?(other) && !covers?(other)
+        return []
+      elsif intersects_top?(other) && !intersects_bottom?(other) && !covers?(other)
+        return []
+      elsif covers?(other)
+        return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
+      elsif !surrounds?(other)
+        return []
+      end
     end
   end
 
