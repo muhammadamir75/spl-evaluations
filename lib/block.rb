@@ -165,20 +165,22 @@ class Block
         elsif intersects_bottom?(other[i]) && covers?(other[i])
           res.push(trim_from([parent.bottom, other[i].bottom].min))
         elsif covers?(other[i])
-          parent = res.push(Block.new([parent.top, other[i].top].min, [parent.top, other[i].top].max), Block.new([parent.bottom, other[i].bottom].min, [parent.bottom, other[i].bottom].max ))
-        end        
+          parent = res.push(Block.new([parent.top, other[i].top].min, [parent.top, other[i].top].max), Block.new([parent.bottom, other[i].bottom].min, [parent.bottom, other[i].bottom].max ))  
+        end
         i += 1
       end
       res
     else
       #Block subtraction
-      if (self == other)
+      if top == other.bottom
+        return [self]
+      elsif (self == other) || (other.bottom > bottom && top < other.bottom)
         return []
       elsif intersects_top?(other) && covers?(other)
         return [trim_to([top, other.top].max)]
       elsif intersects_bottom?(other) && covers?(other)
         return [trim_from([bottom, other.bottom].min)]
-      elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other)
+      elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other) 
         return [self]
       elsif (((!intersects_top?(other) && intersects_bottom?(other)) || (intersects_top?(other) && !intersects_bottom?(other))) && !covers?(other)) || !surrounds?(other)
         return []
@@ -214,7 +216,7 @@ class Block
         result = result.last + others[ind] if result.class == Array
         result.each do |r|
           if !res.include?(r)
-            if !res.last.overlaps?(r)
+              if !res.last.overlaps?(r)
               res.push(r)
             elsif res.last.intersects_top?(r)
               res[res.length - 1] = (res.last + r).first
