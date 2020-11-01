@@ -155,32 +155,24 @@ class Block
   def subtract (other)
     # Implement.
     if other.class == Array
+      #Array subtraction
       i = 0
       parent = self
       res = []
       while (i < other.length)
-        if parent == other[i]
-          #do nothing
-        elsif intersects_top?(other[i]) && covers?(other[i])
+        if intersects_top?(other[i]) && covers?(other[i])
           res.push(trim_to([parent.top, other[i].top].max))
         elsif intersects_bottom?(other[i]) && covers?(other[i])
           res.push(trim_from([parent.bottom, other[i].bottom].min))
-        elsif (!intersects_top?(other[i]) && !intersects_bottom?(other[i])) && !covers?(other[i]) && !surrounds?(other[i])
-          #do nothing
-        elsif !intersects_top?(other[i]) && intersects_bottom?(other[i]) && !covers?(other[i])
-          #do nothing
-        elsif intersects_top?(other[i]) && !intersects_bottom?(other[i]) && !covers?(other[i])
-          #do nothing
         elsif covers?(other[i])
           parent = res.push(Block.new([parent.top, other[i].top].min, [parent.top, other[i].top].max), Block.new([parent.bottom, other[i].bottom].min, [parent.bottom, other[i].bottom].max ))
-        elsif !surrounds?(other[i])
-          #do nothing
         end        
         i += 1
       end
       res
     else
-      if self == other
+      #Block subtraction
+      if (self == other)
         return []
       elsif intersects_top?(other) && covers?(other)
         return [trim_to([top, other.top].max)]
@@ -188,14 +180,10 @@ class Block
         return [trim_from([bottom, other.bottom].min)]
       elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other)
         return [self]
-      elsif !intersects_top?(other) && intersects_bottom?(other) && !covers?(other)
-        return []
-      elsif intersects_top?(other) && !intersects_bottom?(other) && !covers?(other)
+      elsif (((!intersects_top?(other) && intersects_bottom?(other)) || (intersects_top?(other) && !intersects_bottom?(other))) && !covers?(other)) || !surrounds?(other)
         return []
       elsif covers?(other)
         return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
-      elsif !surrounds?(other)
-        return []
       end
     end
   end
