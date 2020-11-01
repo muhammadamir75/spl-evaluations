@@ -41,10 +41,6 @@ class Block
   # = Length =
   # ==========
 
-  def length?
-    bottom - top > 0 ? 1 : 0 
-  end
-
   def length
     bottom - top
   end
@@ -158,27 +154,27 @@ class Block
 
   def subtract (other)
     # Implement.
-    if other.length > 1
+    if other.class == Array
       i = 0
       parent = self
       res = []
       while (i < other.length)
         if parent == other[i]
-          puts parent
+          #do nothing
         elsif intersects_top?(other[i]) && covers?(other[i])
           res.push(trim_to([parent.top, other[i].top].max))
         elsif intersects_bottom?(other[i]) && covers?(other[i])
           res.push(trim_from([parent.bottom, other[i].bottom].min))
         elsif (!intersects_top?(other[i]) && !intersects_bottom?(other[i])) && !covers?(other[i]) && !surrounds?(other[i])
-          puts parent
+          #do nothing
         elsif !intersects_top?(other[i]) && intersects_bottom?(other[i]) && !covers?(other[i])
-          puts parent
+          #do nothing
         elsif intersects_top?(other[i]) && !intersects_bottom?(other[i]) && !covers?(other[i])
-          puts parent
+          #do nothing
         elsif covers?(other[i])
           parent = res.push(Block.new([parent.top, other[i].top].min, [parent.top, other[i].top].max), Block.new([parent.bottom, other[i].bottom].min, [parent.bottom, other[i].bottom].max ))
         elsif !surrounds?(other[i])
-          puts parent
+          #do nothing
         end        
         i += 1
       end
