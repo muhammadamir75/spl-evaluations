@@ -172,21 +172,7 @@ class Block
       res
     else
       #Block subtraction
-      if top == other.bottom
-        return [self]
-      elsif (self == other) || (other.bottom > bottom && top < other.bottom)
-        return []
-      elsif intersects_top?(other) && covers?(other)
-        return [trim_to([top, other.top].max)]
-      elsif intersects_bottom?(other) && covers?(other)
-        return [trim_from([bottom, other.bottom].min)]
-      elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other) 
-        return [self]
-      elsif (((!intersects_top?(other) && intersects_bottom?(other)) || (intersects_top?(other) && !intersects_bottom?(other))) && !covers?(other)) || !surrounds?(other)
-        return []
-      elsif covers?(other)
-        return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
-      end
+      helper_subtract(other)
     end
   end
 
@@ -234,4 +220,24 @@ class Block
     res
   end
 
+  private
+
+    def helper_subtract(other)
+      if top == other.bottom
+        return [self]
+      elsif (self == other) || (other.bottom > bottom && top < other.bottom)
+        return []
+      elsif intersects_top?(other) && covers?(other)
+        return [trim_to([top, other.top].max)]
+      elsif intersects_bottom?(other) && covers?(other)
+        return [trim_from([bottom, other.bottom].min)]
+      elsif (!intersects_top?(other) && !intersects_bottom?(other)) && !covers?(other) && !surrounds?(other) 
+        return [self]
+      elsif (((!intersects_top?(other) && intersects_bottom?(other)) || (intersects_top?(other) && !intersects_bottom?(other))) && !covers?(other)) || !surrounds?(other)
+        return []
+      elsif covers?(other)
+        return [Block.new([top, other.top].min, [top, other.top].max), Block.new([bottom, other.bottom].min, [bottom, other.bottom].max )]
+      end
+    end
+    
 end
